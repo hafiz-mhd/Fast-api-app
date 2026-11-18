@@ -7,7 +7,7 @@ pipeline {
         SONAR_SERVER_NAME     = 'sonarqube_env' 
         SONAR_SCANNER_TOOL    = 'sonar-scanner'     
         GIT_CREDENTIALS_ID    = 'github-cred'
-        MANIFEST_REPO         = 'https://github.com/hafiz-mhd/Fast-api-chatbot-pipeline.git'
+        MANIFEST_REPO         = 'https://github.com/hafiz-mhd/Fast-api-app.git'
         MANIFEST_BRANCH       = 'main'
     }
 
@@ -58,10 +58,10 @@ pipeline {
                     sh "git clone ${MANIFEST_REPO} . || true"
                     withCredentials([usernamePassword(credentialsId: "${GIT_CREDENTIALS_ID}", usernameVariable: 'GH_USER', passwordVariable: 'GH_TOKEN')]) {
                         sh """
-                            git remote set-url origin https://\${GH_USER}:\${GH_TOKEN}@github.com/hafiz-mhd/Fast-api-chatbot-pipeline.git
+                            git remote set-url origin https://\${GH_USER}:\${GH_TOKEN}@github.com/hafiz-mhd/Fast-api-app.git
                             git pull --rebase origin ${MANIFEST_BRANCH}
                             
-                            sed -i '/name: fastapi-app/{n;s|image:.*|image: ${DOCKER_IMAGE}:${env.BUILD_NUMBER}|}' fastapi-app-main/k8s/Deployment.yaml
+                            sed -i '/name: fastapi-app/{n;s|image:.*|image: ${DOCKER_IMAGE}:${env.BUILD_NUMBER}|}' fastapi-app/k8s/Deployment.yaml
                             
                             git config user.name "hafiz-mhd"
                             git config user.email "hafizmuhammedar123@gmail.com"
