@@ -15,7 +15,7 @@ spec:
         app: fastapi-app
     spec:
       containers:
-        - name: fast-api-chatbot
+        - name: fastapi-app
           image: hafizmhd/fastapi-app
           imagePullPolicy: Always
           ports:
